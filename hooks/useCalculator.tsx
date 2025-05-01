@@ -35,6 +35,15 @@ export const useCalculator = () => {
     }
   }
 
+  const deleteLast = () => {
+    if (number.length === 2 && number.includes('-'))
+      return setNumber('0');
+    else if (number.length === 1)
+      return setNumber('0');
+
+    setNumber(number.slice(0, -1));
+  }
+
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return;
 
@@ -68,6 +77,7 @@ export const useCalculator = () => {
     // Methods
     buildNumber,
     clean,
-    toggleSign
+    toggleSign,
+    deleteLast
   }
 }
