@@ -44,6 +44,20 @@ export const useCalculator = () => {
     setNumber(number.slice(0, -1));
   }
 
+  const setLastNumber = () => {
+    if (number.endsWith('.')) {
+      setNumber(number.slice(0, -1));
+    }
+
+    setPreviousNumber(number);
+    setNumber('0');
+  }
+
+  const divideOperation = () => {
+    setLastNumber();
+    lastOperation.current = EOperator.divide;
+  }
+
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return;
 
@@ -78,6 +92,7 @@ export const useCalculator = () => {
     buildNumber,
     clean,
     toggleSign,
-    deleteLast
+    deleteLast,
+    divideOperation
   }
 }
