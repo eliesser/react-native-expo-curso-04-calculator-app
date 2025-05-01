@@ -13,11 +13,19 @@ export const useCalculator = () => {
   const [number, setNumber] = useState('0');
   const [previousNumber, setPreviousNumber] = useState('0');
 
-  const lastOperation = useRef<EOperator | null>(null);
+  const lastOperation = useRef<EOperator>();
 
   useEffect(() => {
     setFormula(number)
   }, [number]);
+
+  const clean = () => {
+    setNumber('0');
+    setPreviousNumber('0');
+    setFormula('0');
+
+    lastOperation.current = undefined;
+  }
 
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return;
@@ -51,5 +59,6 @@ export const useCalculator = () => {
 
     // Methods
     buildNumber,
+    clean
   }
 }
