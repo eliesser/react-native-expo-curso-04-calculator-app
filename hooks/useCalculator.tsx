@@ -20,7 +20,27 @@ export const useCalculator = () => {
   }, [number]);
 
   const buildNumber = (numberString: string) => {
-    console.log({ numberString });
+    if (number.includes('.') && numberString === '.') return;
+
+    if (number.startsWith('0') || number.startsWith('-0')) {
+      if (numberString === '.') {
+        return setNumber(number + numberString);
+      }
+
+      if (numberString === '0' && number.includes('.')) {
+        return setNumber(number + numberString);
+      }
+
+      if (numberString !== '0' && !number.includes('.')) {
+        return setNumber(numberString);
+      }
+
+      if (numberString === '0' && !number.includes('.')) {
+        return;
+      }
+    }
+
+    setNumber(number + numberString);
   }
 
   return {
