@@ -25,8 +25,9 @@ export const useCalculator = () => {
   }, [number]);
 
   useEffect(() => {
-    // setFormula(number)
-  }, [number]);
+    const subResult = calculateSubResult();
+    setPreviousNumber(subResult.toString());
+  }, [formula]);
 
   const clean = () => {
     setNumber('0');
@@ -54,6 +55,7 @@ export const useCalculator = () => {
   }
 
   const setLastNumber = () => {
+    calculateResult();
     if (number.endsWith('.')) {
       setNumber(number.slice(0, -1));
     }
@@ -80,6 +82,39 @@ export const useCalculator = () => {
   const addOperation = () => {
     setLastNumber();
     lastOperation.current = EOperator.add;
+  }
+
+  const calculateSubResult = () => {
+    const [firstValue, operator, secondValue] = formula.split(' ');
+
+    const num1 = Number(firstValue);
+    const num2 = Number(secondValue);
+
+    if (isNaN(num2)) return num1;
+
+    switch (operator) {
+      case EOperator.add:
+        return num1 + num2;
+
+      case EOperator.subtract:
+        return num1 - num2;
+
+      case EOperator.multiply:
+        return num1 * num2;
+
+      case EOperator.divide:
+        return num1 / num2;
+
+      default:
+        throw new Error(`Operator ${operator} not supported`);
+    }
+  }
+
+  const calculateResult = () => {
+    const subResult = calculateSubResult();
+    setFormula(subResult.toString());
+    lastOperation.current = undefined;
+    setPreviousNumber('0')
   }
 
   const buildNumber = (numberString: string) => {
@@ -120,6 +155,8 @@ export const useCalculator = () => {
     divideOperation,
     multiplyOperation,
     subtractOperation,
-    addOperation
+    addOperation,
+    calculateSubResult,
+    calculateResult
   }
 }
