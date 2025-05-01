@@ -16,7 +16,16 @@ export const useCalculator = () => {
   const lastOperation = useRef<EOperator>();
 
   useEffect(() => {
-    setFormula(number)
+    if (lastOperation.current) {
+      const firstFormulaPart = formula.split(' ').at(0);
+      setFormula(`${firstFormulaPart} ${lastOperation.current} ${number}`);
+    } else {
+      setFormula(number);
+    }
+  }, [number]);
+
+  useEffect(() => {
+    // setFormula(number)
   }, [number]);
 
   const clean = () => {
@@ -58,6 +67,21 @@ export const useCalculator = () => {
     lastOperation.current = EOperator.divide;
   }
 
+  const multiplyOperation = () => {
+    setLastNumber();
+    lastOperation.current = EOperator.multiply;
+  }
+
+  const subtractOperation = () => {
+    setLastNumber();
+    lastOperation.current = EOperator.subtract;
+  }
+
+  const addOperation = () => {
+    setLastNumber();
+    lastOperation.current = EOperator.add;
+  }
+
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return;
 
@@ -93,6 +117,9 @@ export const useCalculator = () => {
     clean,
     toggleSign,
     deleteLast,
-    divideOperation
+    divideOperation,
+    multiplyOperation,
+    subtractOperation,
+    addOperation
   }
 }
