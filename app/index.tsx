@@ -4,12 +4,15 @@ import { globalStyles } from '@/styles/global-styles'
 import ThemeText from '@/components/ThemeText'
 import CalculatorButton from '@/components/CalculatorButton'
 import { Colors } from '@/constants/Colors'
+import { useCalculator } from '@/hooks/useCalculator'
 
 const CalculatorApp = () => {
+  const { formula, number, previousNumber, buildNumber } = useCalculator();
+
   return (
     <View style={globalStyles.calculatorContainer}>
       <View style={{ paddingHorizontal: 30, marginBottom: 20 }}>
-        <ThemeText variant='h1'>50 X 50</ThemeText>
+        <ThemeText variant='h1'>{formula}</ThemeText>
         <ThemeText variant='h2'>250</ThemeText>
       </View>
 
@@ -42,8 +45,8 @@ const CalculatorApp = () => {
       </View>
 
       <View style={globalStyles.row}>
-        <CalculatorButton label='0' onPress={() => { console.log('0') }} doubleSize />
-        <CalculatorButton label='.' onPress={() => { console.log('.') }} />
+        <CalculatorButton label='0' onPress={() => { buildNumber('0') }} doubleSize />
+        <CalculatorButton label='.' onPress={() => { buildNumber('.') }} />
         <CalculatorButton label='=' onPress={() => { console.log('=') }} color={Colors.orange} />
       </View>
     </View>
