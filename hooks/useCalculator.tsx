@@ -27,6 +27,14 @@ export const useCalculator = () => {
     lastOperation.current = undefined;
   }
 
+  const toggleSign = () => {
+    if (number.includes('-')) {
+      setNumber(number.replace('-', ''));
+    } else {
+      setNumber('-' + number);
+    }
+  }
+
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return;
 
@@ -59,6 +67,7 @@ export const useCalculator = () => {
 
     // Methods
     buildNumber,
-    clean
+    clean,
+    toggleSign
   }
 }
