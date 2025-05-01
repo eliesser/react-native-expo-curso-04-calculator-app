@@ -1,8 +1,10 @@
-import { Slot } from 'expo-router';
-import { View, Text } from 'react-native';
-import { useFonts } from 'expo-font';
-import { Colors } from '@/constants/Colors';
-import { StatusBar } from 'expo-status-bar';
+import { View, Text } from 'react-native'
+
+import { Slot } from 'expo-router'
+import { useFonts } from 'expo-font'
+import { StatusBar } from 'expo-status-bar'
+
+import { globalStyles } from '@/styles/global-styles'
 
 const RootLayout = () => {
   const [loaded] = useFonts({
@@ -12,7 +14,7 @@ const RootLayout = () => {
   if (!loaded) return null;
 
   return (
-    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
+    <View style={globalStyles.background}>
       <Slot />
 
       <StatusBar style="light" />
@@ -20,4 +22,4 @@ const RootLayout = () => {
   )
 }
 
-export default RootLayout;
+export default RootLayout
